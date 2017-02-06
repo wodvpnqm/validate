@@ -153,10 +153,10 @@ public class AnnoUtil {
         List<ValidateUnit<T>> thisList = new ArrayList<>();
         ValidateUnit<T> vu;
         List<Annotation> annoList;
-        Method[] methods = ReflectionUtil.getAllMethod(target.getClass());
+        List<Method> methods = ReflectionUtil.getAllMethod(target.getClass());
         List<Field> fields = ReflectionUtil.getAllField(target.getClass());
         List<Member> members = new ArrayList<>();
-        members.addAll(Arrays.asList(methods));
+        members.addAll(methods);
         members.addAll(fields);
         boolean isField;
         Field field = null;

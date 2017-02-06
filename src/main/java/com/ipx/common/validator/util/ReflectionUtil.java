@@ -30,33 +30,56 @@ import java.util.List;
  */
 public abstract class ReflectionUtil {
 
-	public static Method[] getAllMethod(Class<?> clazz)
-	{
-		return  ReflectionUtils.getAllDeclaredMethods(clazz);
-	}
+    /**
+     * 递归获得所有的方法,包必须以com.ipx开头
+     * @param clazz
+     * @return
+     */
+    public static List<Method> getAllMethod(Class<?> clazz) {
+        List<Method> methods = new ArrayList<>();
+        ReflectionUtils.doWithMethods(clazz, new ReflectionUtils.MethodCallback() {
+                    @Override
+                    public void doWith(Method method) throws IllegalArgumentException, IllegalAccessException {
 
-	public static List<Field> getAllField(Class<?> clazz)
-	{
-		List<Field> fields = new ArrayList<>();
-		ReflectionUtils.doWithFields(clazz,
-				new ReflectionUtils.FieldCallback() {
-					@Override
-					public void doWith(final Field field) throws IllegalArgumentException,
-							IllegalAccessException {
-						fields.add(field);
-					}
-				},
-				new ReflectionUtils.FieldFilter() {
-					@Override
-					public boolean matches(final Field field) {
-						final int modifiers = field.getModifiers();
-						// no static fields please
-						return !Modifier.isStatic(modifiers);
-					}
-				});
-		return fields;
-	}
+                    }
+                },
+                new ReflectionUtils.MethodFilter() {
+                    @Override
+                    public boolean matches(Method method) {
+                        final int modifiers = method.getModifiers();
+                        // no static fields please
+                        return !Modifier.isStatic(modifiers);
+                    }
+                }
+        );
+        return methods;
+    }
 
+    /**
+     * 递归获得所有的字段,报名必须以com.ipx开头
+     * @param clazz
+     * @return
+     */
+    public static List<Field> getAllField(Class<?> clazz) {
+        List<Field> fields = new ArrayList<>();
+        ReflectionUtils.doWithFields(clazz,
+                new ReflectionUtils.FieldCallback() {
+                    @Override
+                    public void doWith(final Field field) throws IllegalArgumentException,
+                            IllegalAccessException {
+                        fields.add(field);
+                    }
+                },
+                new ReflectionUtils.FieldFilter() {
+                    @Override
+                    public boolean matches(final Field field) {
+                        final int modifiers = field.getModifiers();
+                        // no static fields please
+                        return !Modifier.isStatic(modifiers);
+                    }
+                });
+        return fields;
+    }
 
 
 }

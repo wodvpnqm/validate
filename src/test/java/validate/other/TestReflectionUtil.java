@@ -50,7 +50,7 @@ public class TestReflectionUtil {
 
     @Test
     public void test3() {
-        Method[] methods = ReflectionUtil.getAllMethod(TestExtendDefaultValidate.User.class);
+        List<Method> methods = ReflectionUtil.getAllMethod(TestExtendDefaultValidate.User.class);
         for (Method method : methods) {
             System.out.println(method.getName());
         }
