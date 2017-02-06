@@ -1,4 +1,4 @@
-package validate;
+package validate.other;
 
 import org.junit.Test;
 

@@ -9,9 +9,15 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        TestExtendDefaultValidate.class,
+        TestDefaultNestValidate.class,
+        TestDefaultListValidate.class,
         TestDefaultMesssageSort.class,
         TestI18nMesssage.class,
         TestMuitiType.class
+
+
+
 })
 public class TestAllValidate {
 }

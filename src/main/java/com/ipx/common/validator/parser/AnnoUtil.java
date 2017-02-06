@@ -7,6 +7,7 @@ import com.ipx.common.validator.result.ValidateResult;
 import com.ipx.common.validator.threadlocal.ThreadMap;
 import com.ipx.common.validator.util.BeanUtils;
 import com.ipx.common.validator.util.Constant;
+import com.ipx.common.validator.util.ReflectionUtil;
 import com.ipx.common.validator.validator.Validate;
 import com.ipx.common.validator.validator.ValidateBuilder;
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class AnnoUtil {
             if (isRepeated) {
                 Method valueMethod = null;
                 try {
-                    valueMethod = ano.getDeclaredMethod("type", new Class<?>[]{});
+                    valueMethod = ano.getDeclaredMethod("value", new Class<?>[]{});
                     Annotation[] annoArray = (Annotation[]) valueMethod.invoke(annos[i], new Object[]{});
                     for (Annotation item : annoArray) {
                         lst.add(item);
@@ -152,11 +153,11 @@ public class AnnoUtil {
         List<ValidateUnit<T>> thisList = new ArrayList<>();
         ValidateUnit<T> vu;
         List<Annotation> annoList;
-        Method[] methods = target.getClass().getDeclaredMethods();
-        Field[] fields = target.getClass().getDeclaredFields();
+        Method[] methods = ReflectionUtil.getAllMethod(target.getClass());
+        List<Field> fields = ReflectionUtil.getAllField(target.getClass());
         List<Member> members = new ArrayList<>();
         members.addAll(Arrays.asList(methods));
-        members.addAll(Arrays.asList(fields));
+        members.addAll(fields);
         boolean isField;
         Field field = null;
         Method method = null;

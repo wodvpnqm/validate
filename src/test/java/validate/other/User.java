@@ -1,4 +1,4 @@
-package validate;
+package validate.other;
 
 import com.ipx.common.validator.annotation.*;
 
